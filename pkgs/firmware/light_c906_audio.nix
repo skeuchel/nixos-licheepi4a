@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   version = "unstable-2023-06-25";
 
   src = fetchurl {
-    url = "https://github.com/chainsx/fedora-riscv-builder/raw/20230623-0255/firmware/light_c906_audio.bin";
+    url = "https://github.com/chainsx/fedora-riscv-builder/raw/20230719-1650/firmware/light_c906_audio.bin";
     hash = "sha256-hv9OQhc6cH7swqVrhPhIxgUsgH4JMiOjw+DRWcK9nNQ=";
   };
 

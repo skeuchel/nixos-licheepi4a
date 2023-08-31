@@ -1,36 +1,28 @@
-let
-  username = "lp4a";
-  hostname = "lp4a";
-  # To generate a hashed password run `mkpasswd`.
-  # this is the hash of the password "lp4a"
-  hashedPassword = "$y$j9T$mTIe/80yqh53danHYbUkP1$2TYCUsFKnkBnHG6pArOv9t.e2ofxO.j1MIt/6rB05P1";
-  # TODO replace this with your own public key!
-  publickey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3F3AH/vKnA2vxl72h67fcxhIK8l+7F/bdE1zmtwTVU ryan@romantic";
-in {
-  # =========================================================================
-  #      Users & Groups NixOS Configuration
-  # =========================================================================
+{ security.sudo.wheelNeedsPassword = false;
 
-  networking.hostName = hostname;
+  users.groups.steve = {
+    gid = 1000;
+    members = [ "steve" ];
+  };
 
-  # TODO Define a user account. Don't forget to update this!
-  users.users."${username}" = {
-    inherit hashedPassword;
-
+  users.users.steve = {
+    description  = "Steven Keuchel";
+    extraGroups = [ "wheel" ];
+    group = "steve";
+    hashedPassword = "$6$rounds=50000$Atoslo2l3cJC3eNs$EoZCimDS28YwbS0abrg1y8PVhPqPqrh8g4/vekg5.GukzoIYcTCXRe0yk4kw.MoF4wRHNgzlA.fAGy0.vLk9L0";
     isNormalUser = true;
-    home = "/home/${username}";
-    extraGroups = ["users" "networkmanager" "wheel" "docker"];
-    openssh.authorizedKeys.keys = [
-      publickey
+    openssh.authorizedKeys.keys  = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDdlkYzOaUkz8+8UfMHrEoPicxSUSZbdxIZWALt18OXj steve-20181214"
+    ];
+    uid = 1000;
+  };
+
+  users.users.root = {
+    hashedPassword = "$6$rounds=50000$CDrYMi4KyY3Q2uI8$aGUb1sf7jUHjlKgFUqOQsWkitfiNLjk53FuYWJDa8usLZNVF7LsnkYpUzgrhZ4wMOEZeuOOor68ZvvTPUdHVb0";
+    openssh.authorizedKeys.keys  = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDdlkYzOaUkz8+8UfMHrEoPicxSUSZbdxIZWALt18OXj steve-20181214"
     ];
   };
 
-  users.users.root.openssh.authorizedKeys.keys = [
-    publickey
-  ];
-
-  users.groups = {
-    "${username}" = {};
-    docker = {};
-  };
+  networking.hostName = "lp4a";
 }
